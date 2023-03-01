@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:random_animal/screens/List.dart';
 import 'package:random_animal/screens/details.dart';
 import 'package:random_animal/screens/home_screen.dart';
+import 'package:random_animal/screens/splash_screen.dart';
 import 'package:random_animal/utils/global.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -18,12 +19,12 @@ import 'package:path/path.dart';
 Future<void> databaseCopy() async {
 
   Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  String path = join(documentsDirectory.path ,'MyDatabase.db');
+  String path = join(documentsDirectory.path ,'Animal.db');
 
   bool fileExists = await databaseExists(path);
 
   if(!fileExists){
-    ByteData data = await rootBundle.load(join('images/MyDatabase.db'));
+    ByteData data = await rootBundle.load(join('images/AnimalTable.db'));
 
     List<int> bytes = data.buffer.asUint8List(data.offsetInBytes,data.lengthInBytes);
     await File(path).writeAsBytes(bytes);
@@ -33,10 +34,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await databaseCopy();
   Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  String path = join(documentsDirectory.path, 'MyDatabase.db');
+  String path = join(documentsDirectory.path, 'Animal.db');
   Database database = await openDatabase(path);
 
-  list = await database.rawQuery('SELECT * FROM AnimalTable');
+  list = await database.rawQuery('SELECT * FROM Animal');
   for (var row in list) {
     print(row);
   }
@@ -60,11 +61,13 @@ void main() async {
         )
       ),
       routes: {
-        '/' : (context) => const RandomAnimal(),
+        '/' : (context) => const SplashScreen(),
+        'random' : (context) => const RandomAnimal(),
         'list' : (context) => const ListPage(),
         'details' : (context) => const DetailsPage()
       },
     ),
   );
 }
+
 

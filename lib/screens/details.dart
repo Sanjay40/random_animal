@@ -16,7 +16,7 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
-    int? index = ModalRoute.of(context)!.settings.arguments as int;
+    String? index = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -32,6 +32,55 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: Colors.grey.shade100,
         elevation: 0,
       ),
+      backgroundColor: Colors.grey.shade100,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+          child: Container(
+            height: 750,
+            width: 415,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+                children: list.map((e){
+                  return (index == e['Name']) ?
+                  Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       Container(
+                         height: 560,
+                         child: Image.network("${e['Image']}",
+                         fit: BoxFit.cover,
+                         ),
+                       ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10,left: 8,bottom: 5),
+                          child: Text("${e['Name']}",
+                       style: GoogleFonts.poppins(
+                           fontWeight: FontWeight.w700,
+                           color: Colors.black,
+                           fontSize: 18
+                       ),
+                       ),
+                        ),
+                       Padding(
+                       padding: const EdgeInsets.only(left: 8,right: 8),
+                         child: Text("${e['About']}",
+                         style: GoogleFonts.poppins(
+                             fontWeight: FontWeight.w600,
+                             color: Colors.grey.shade600,
+                             fontSize: 15
+                         ),
+                         ),
+                       )
+                     ],
+                   ) :
+                  Container();
+                }).toList(),
+            ),
+          ),
+        ),
     );
 
   }

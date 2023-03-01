@@ -28,7 +28,7 @@ class _RandomAnimalState extends State<RandomAnimal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Animal"),
+        title: const Text("Category"),
         centerTitle: true,
         backgroundColor: Colors.grey.shade100,
         elevation: 0,

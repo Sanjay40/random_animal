@@ -25,18 +25,20 @@ class _ListPageState extends State<ListPage> {
           color: Colors.black,
           ),
         ),
-        title: const Text("List Data"),
+        title: const Text("Animal"),
         centerTitle: true,
         backgroundColor: Colors.grey.shade100,
         elevation: 0,
       ),
       body: Column(
         children: list.map((e){
-          return (index == e['Category']) ? Padding(
+          return (index == e['Category']) ?
+          Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: (){
-                Navigator.pushNamed(context, 'details');
+                Navigator.pushNamed(context, 'details',arguments: e['Name']);
+                print("details ${e['Name']}");
               },
               child: Container(
                 height: 100,
@@ -45,10 +47,11 @@ class _ListPageState extends State<ListPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 alignment: Alignment.center,
-                child: Text("${e['Animal']}"),
+                child: Text("${e['Name']}"),
               ),
             ),
-          ) : Container();
+          ) :
+          Container();
         }).toList(),
       )
       );
